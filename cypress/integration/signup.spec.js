@@ -1,5 +1,5 @@
-import SignupPage from '../pages/SignupPage'
-import SignupFactory from '../factories/SignupFactory'
+import signupPage from '../pages/SignupPage'
+import signupFactory from '../factories/SignupFactory'
 
 describe('Signup', () => {
 
@@ -11,39 +11,38 @@ describe('Signup', () => {
 
     it('User should be deliver', function () {
 
-        var deliver = SignupFactory.deliver()
+        var deliver = signupFactory.deliver()
 
-        SignupPage.go()
-        SignupPage.fillForm(deliver)
-        SignupPage.submit()
+        signupPage.go()
+        signupPage.fillForm(deliver)
+        signupPage.submit()
 
         const expectedMessage = 'Recebemos os seus dados. Fique de olho na sua caixa de email, pois e em breve retornamos o contato.'
-        SignupPage.modalContentShouldBe(expectedMessage)
+        signupPage.modalContentShouldBe(expectedMessage)
     })
 
     it('Incorrect document', function () {
 
-        var deliver = SignupFactory.deliver()
+        var deliver = signupFactory.deliver()
+
         deliver.cpf = '000000141aa'
 
-        SignupPage.go()
-        SignupPage.fillForm(deliver)
-        SignupPage.submit()
-        SignupPage.alertMessageShouldBe('Oops! CPF inválido')
-
+        signupPage.go()
+        signupPage.fillForm(deliver)
+        signupPage.submit()
+        signupPage.alertMessageShouldBe('Oops! CPF inválido')
     })
 
     it('Incorrect email', function () {
 
-        var deliver = SignupFactory.deliver()
+        var deliver = signupFactory.deliver()
 
         deliver.email = 'user.com.br'
 
-        SignupPage.go()
-        SignupPage.fillForm(deliver)
-        SignupPage.submit()
-        SignupPage.alertMessageShouldBe('Oops! Email com formato inválido.')
-
+        signupPage.go()
+        signupPage.fillForm(deliver)
+        signupPage.submit()
+        signupPage.alertMessageShouldBe('Oops! Email com formato inválido.')
     })
 
     context('Required fields', function () {
@@ -56,19 +55,17 @@ describe('Signup', () => {
             { field: 'number', output: 'É necessário informar o número do endereço' },
             { field: 'delivery_method', output: 'Selecione o método de entrega' },
             { field: 'cnh', output: 'Adicione uma foto da sua CNH' }
-
         ]
 
         before(function(){
-            SignupPage.go()
-            SignupPage.submit()
+            signupPage.go()
+            signupPage.submit()
         })
 
         messages.forEach(function(msg){
             it(`${msg.field} is required`, function(){
-                SignupPage.alertMessageShouldBe(msg.output)
+                signupPage.alertMessageShouldBe(msg.output)
             })
-
         })
 
     })
