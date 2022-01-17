@@ -1,4 +1,4 @@
-import signup from '../pages/SignupPage'
+import SignupPage from '../pages/SignupPage'
 import SignupFactory from '../factories/SignupFactory'
 
 describe('Signup', () => {
@@ -13,12 +13,12 @@ describe('Signup', () => {
 
         var deliver = SignupFactory.deliver()
 
-        signup.go()
-        signup.fillForm(deliver)
-        signup.submit()
+        SignupPage.go()
+        SignupPage.fillForm(deliver)
+        SignupPage.submit()
 
         const expectedMessage = 'Recebemos os seus dados. Fique de olho na sua caixa de email, pois e em breve retornamos o contato.'
-        signup.modalContentShouldBe(expectedMessage)
+        SignupPage.modalContentShouldBe(expectedMessage)
     })
 
     it('Incorrect document', function () {
@@ -26,10 +26,10 @@ describe('Signup', () => {
         var deliver = SignupFactory.deliver()
         deliver.cpf = '000000141aa'
 
-        signup.go()
-        signup.fillForm(deliver)
-        signup.submit()
-        signup.alertMessageShouldBe('Oops! CPF inválido')
+        SignupPage.go()
+        SignupPage.fillForm(deliver)
+        SignupPage.submit()
+        SignupPage.alertMessageShouldBe('Oops! CPF inválido')
 
     })
 
@@ -39,10 +39,10 @@ describe('Signup', () => {
 
         deliver.email = 'user.com.br'
 
-        signup.go()
-        signup.fillForm(deliver)
-        signup.submit()
-        signup.alertMessageShouldBe('Oops! Email com formato inválido.')
+        SignupPage.go()
+        SignupPage.fillForm(deliver)
+        SignupPage.submit()
+        SignupPage.alertMessageShouldBe('Oops! Email com formato inválido.')
 
     })
 
@@ -60,13 +60,13 @@ describe('Signup', () => {
         ]
 
         before(function(){
-            signup.go()
-            signup.submit()
+            SignupPage.go()
+            SignupPage.submit()
         })
 
         messages.forEach(function(msg){
             it(`${msg.field} is required`, function(){
-               signup.alertMessageShouldBe(msg.output)
+                SignupPage.alertMessageShouldBe(msg.output)
             })
 
         })
